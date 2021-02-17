@@ -24,16 +24,65 @@ namespace Form1
         }
         private void button4_Click(object sender, EventArgs e)
         {
-            display();
+            Display();
         }
 
-        public void display()
+        public void Display()
         {
             SqlDataAdapter sqlAdapter = new SqlDataAdapter("Select * from StudentDetails", connection);
             DataTable dt = new DataTable();
             sqlAdapter.Fill(dt);
             dataGridView1.DataSource = dt;
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+            SqlCommand cmd;
+            connection.Open();
+            String sqlQuery = "INSERT INTO StudentDetails (Name,Age,City,Gender) VALUES (@Name,@Age,@City,@Gender)";
+
+            cmd = new SqlCommand(sqlQuery, connection);
+            cmd.Parameters.AddWithValue("@name", textBox1.Text);
+            cmd.Parameters.AddWithValue("@age", int.Parse(textBox2.Text));
+            cmd.Parameters.AddWithValue("@city", textBox3.Text);
+            cmd.Parameters.AddWithValue("@gender", comboBox1.Text);
+
+            cmd.CommandType = CommandType.Text;
+            cmd.ExecuteNonQuery();
+            connection.Close();
+            Display();
+            MessageBox.Show("Data Inserted ");
+        }
+
+        public void CLearFields()
+        {
+            textBox1.Clear();
+            textBox2.Clear();
+            textBox3.Clear();
+            comboBox1.Items.Clear();
+        }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
         private void label1_Click(object sender, EventArgs e)
