@@ -63,7 +63,25 @@ namespace Form1
             comboBox1.Items.Clear();
         }
 
+        private void button3_Click(object sender, EventArgs e)
+        {
+            connection.Open();
 
+            for (int i = 0; i < dataGridView1.Rows.Count; i++)
+            {
+                DataGridViewRow deleteRow = dataGridView1.Rows[i];
+
+                if (deleteRow.Selected == true)
+                {
+                    string sqlQuery = "DELETE FROM StudentDetails Where id='" + dataGridView1.Rows[i].Cells[0].Value + "'";
+
+                    SqlCommand sqlCommand = new SqlCommand(sqlQuery, connection);
+                    dataGridView1.Rows.RemoveAt(i);
+                    MessageBox.Show("Data Deleted");
+                }
+            }
+            connection.Close();
+        }
 
 
 
